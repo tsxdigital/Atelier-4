@@ -1,13 +1,30 @@
 #include <stdio.h>
 
 #define NB_VALEURS 3
-#define MAX_LONGUEUR 50
+#define MAX_LIGNES 15
+
+void afficher_ligne_histov(int valeurs[], int taille, float y)
+{
+    printf("| ");
+    for (int k = 0; k < taille; k++)
+    {
+        if (valeurs[k] >= y)
+        {
+            printf("xxx ");
+        }
+        else
+        {
+            printf("    ");
+        }
+    }
+    printf("\n");
+}
 
 int main(void)
 {
     int valeurs[NB_VALEURS] = { 8, 4, 12 };
 
-    /* Recherche du maximum */
+    /* Recherche du maximum (étape 2) */
     int maximum = valeurs[0];
     for (int i = 1; i < NB_VALEURS; i++)
     {
@@ -17,22 +34,13 @@ int main(void)
         }
     }
 
-    /* Calcul de l'échelle */
-    float echelle = (float)MAX_LONGUEUR / maximum;
-
-    /* Affichage */
-    for (int i = 0; i < NB_VALEURS; i++)
+    /* Affichage vertical */
+    for (int i = 0; i < MAX_LIGNES; i++)
     {
-        int nb_croix = (int)(valeurs[i] * echelle);
-
-        printf("| ");
-        for (int j = 0; j < nb_croix; j++)
-        {
-            printf("x");
-        }
-        printf(" %d\n", valeurs[i]);
+        float y = maximum - (float)(i * maximum) / MAX_LIGNES;
+        afficher_ligne_histov(valeurs, NB_VALEURS, y);
     }
-    printf("+-------------------------------------------------------\n");
+    printf("+---------------------------------------\n");
 
     return 0;
 }
